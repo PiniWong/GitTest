@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        #box{
+            border: 1px solid black;
+            width: 100%;
+            height: 100%;
+            float: left;    
+        }
+        button{
+            float: left;
+        }
+        #div1{
+            width: 300px;
+            display: none;
+            position: fixed;
+            height: 300px;
+            top: 50%;
+            left: 50%;
+            border: 1px solid black;
+            float: left;
+            transform: translate(-50%,-50%);
+            background-color: gray;
+            
+        }
+
+    </style>
+</head>
+<body>
+    
+    
+    <div id="box" >
+        <button>点击显示框</button>
+        <div id="div1"></div>
+    </div>
+    <script>
+        var but = document.querySelector('button');
+        var div = document.querySelector('#div1');
+        var box = document.querySelector('#box');
+        but.addEventListener('click',function(){
+            div.style.display='block'
+            box.style.backgroundColor="rgba(0,0,0,0.1)"
+        })
+        div.addEventListener('mousedown',function(e){  //mousedown 是按住
+            console.log('X是'+e.pageX+'  Y是'+e.pageY);
+            console.log('X是'+this.offsetLeft+'  Y是'+this.offsetTop);
+            var x = e.pageX-this.offsetLeft;    //获取鼠标离父元素的距离
+            var y = e.pageY-this.offsetTop;     //获取鼠标离父元素的距离
+            function mover(e){
+                div.style.left=e.pageX-x;       //将当前鼠标的值减去距离父元素的值则是盒子的距离
+                div.style.top=e.pageY-y;
+            }
+            document.addEventListener('mousemove',mover)
+            document.addEventListener('mouseup',function(){
+                document.removeEventListener('mousemove',mover) //removerEventListener 是移出监听事件
+            })
+            
+        })
+       
+     </script>
+</body>
+</html>
